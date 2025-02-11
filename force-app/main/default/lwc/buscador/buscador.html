@@ -1,0 +1,20 @@
+<template>
+    <lightning-card title="Buscador de Cuentas" icon-name="standard:account">
+        <div class="slds-p-around_medium">
+            <lightning-input
+                label="Buscar Cuentas"
+                type="text"
+                value={searchTerm}
+                onchange={handleSearchTermChange}
+                placeholder="Ingrese el nombre de la cuenta"
+            ></lightning-input>
+        </div>
+        <lightning-datatable
+            key-field="Id"
+            data={accounts}
+            columns={columnas}
+            onrowselection={handleRowSelection}
+            selection-mode="single"
+        ></lightning-datatable>
+    </lightning-card>
+</template>

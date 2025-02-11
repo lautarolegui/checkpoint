@@ -1,0 +1,21 @@
+<template>
+    <lightning-card title="Proyectos de la cuenta seleccionada">
+        <div class="slds-card__body slds-card__body_inner">
+            <!-- Lista de proyectos -->
+            <lightning-datatable
+                key-field="Id"
+                data={proyectos}
+                columns={columns}
+                hide-checkbox-column="true"
+                onrowaction={handleDeleteRow}>
+            </lightning-datatable>
+
+            <!-- Mensaje de error -->
+            <template if:true={error}>
+                <div class="slds-text-color_error">
+                    No se pudieron cargar los proyectos, no hay una cuenta seleccionada.
+                </div>
+            </template>
+        </div>
+    </lightning-card>
+</template>
