@@ -1,7 +1,7 @@
 public with sharing class ProyectoTriggerHandler {
     
     //listas de proyectos nuevos y viejos
-    private List<Proyecto__c> newProjects {get; set;}
+    private List<Proyecto__c> newProjects {get; set;} 
     private List<Proyecto__c> oldProjects {get; set;}
 
     //propiedades del contexto del trigger
