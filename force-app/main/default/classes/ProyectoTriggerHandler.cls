@@ -55,7 +55,7 @@ public with sharing class ProyectoTriggerHandler {
     }
 
     //método para obtener cuentas afectadas por una lista de proyectos
-    public static List<Account> obtenerCuentasAfectadas(List<Proyecto__c> listaProyectos){ //ya no es estático, porque no es llamado desde el exterior
+    public static List<Account> obtenerCuentasAfectadas(List<Proyecto__c> listaProyectos){ 
         if(listaProyectos.size() < 1){
             List<Account> listaCuentas = new List<Account>();
             return listaCuentas;
@@ -65,7 +65,7 @@ public with sharing class ProyectoTriggerHandler {
             for(Proyecto__c p: listaProyectos){
                     listaIDCuentas.add(p.Account__c);
             }
-            List<Account> listaCuentas = [SELECT Id, Numero_Proyectos_Activos__c, Limite_Proyectos_Activos__c //ya no trae el Name, que no era usado para nada
+            List<Account> listaCuentas = [SELECT Id, Numero_Proyectos_Activos__c, Limite_Proyectos_Activos__c //ya no trae el Name, que no era usado para nada, siempre traer la data minima e indispensable. en Apex, siempre que se ejecuta una query con SOQL se trae la Id
                                             FROM Account
                                             WHERE Id IN :listaIDCuentas
                                             WITH SECURITY_ENFORCED 
