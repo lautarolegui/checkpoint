@@ -17,3 +17,4 @@ public with sharing class BuscadorController {
         return accountList;    
     }
 }
+//anotacion de prueba, esto va a secundaria
