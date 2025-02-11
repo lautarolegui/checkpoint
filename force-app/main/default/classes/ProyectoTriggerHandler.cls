@@ -55,7 +55,7 @@ public with sharing class ProyectoTriggerHandler {
     }
 
     //método para obtener cuentas afectadas por una lista de proyectos
-    public List<Account> obtenerCuentasAfectadas(List<Proyecto__c> listaProyectos){ //ya no es estático, porque no es llamado desde el exterior
+    public static List<Account> obtenerCuentasAfectadas(List<Proyecto__c> listaProyectos){ //ya no es estático, porque no es llamado desde el exterior
         if(listaProyectos.size() < 1){
             List<Account> listaCuentas = new List<Account>();
             return listaCuentas;

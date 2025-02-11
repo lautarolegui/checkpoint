@@ -1,16 +1,21 @@
 @IsTest
 private class ProyectoTriggerHandlerTest {
-    @IsTest
-    static void eliminarProyectosViejosTestPositivo() {
-        //GIVEN
-
+    @TestSetup //se agrega el test setup para los test, para optimizar el codigo
+    static void cargaCuentas() {
         Account cuentaTest = new Account(Name = 'Cuenta 1');
         insert cuentaTest;
 
         Contact contactoTest = new Contact(FirstName = 'Soyde', LastName = 'Prueba', AccountId = cuentaTest.Id);
         insert contactoTest;
+    }
 
-        
+    @IsTest
+    static void eliminarProyectosViejosTestPositivo() {
+        //GIVEN
+        Account cuentaTest = [SELECT Id FROM Account WHERE Name = 'Cuenta 1' LIMIT 1];
+
+        Contact contactoTest = [SELECT Id FROM Contact WHERE FirstName = 'Soyde' LIMIT 1];
+
         // Buscar un usuario con el perfil "System Administrator"
         User adminUser = [SELECT Id FROM User WHERE Profile.Name = 'System Administrator' LIMIT 1];
 
@@ -44,12 +49,9 @@ private class ProyectoTriggerHandlerTest {
     @IsTest
     static void eliminarProyectosViejosTestNegativoFecha() {
         //GIVEN
+        Account cuentaTest = [SELECT Id FROM Account WHERE Name = 'Cuenta 1' LIMIT 1];
 
-        Account cuentaTest = new Account(Name = 'Cuenta 1');
-        insert cuentaTest;
-
-        Contact contactoTest = new Contact(FirstName = 'Soyde', LastName = 'Prueba', AccountId = cuentaTest.Id);
-        insert contactoTest;
+        Contact contactoTest = [SELECT Id FROM Contact WHERE FirstName = 'Soyde' LIMIT 1];
 
         Proyecto__c proyectoAEliminar = new Proyecto__c(
             Name = 'Proyecto Nuevo', 
@@ -82,12 +84,10 @@ private class ProyectoTriggerHandlerTest {
     @IsTest
     static void eliminarProyectosViejosTestNegativoEstado() {
         //GIVEN
+        Account cuentaTest = [SELECT Id FROM Account WHERE Name = 'Cuenta 1' LIMIT 1];
 
-        Account cuentaTest = new Account(Name = 'Cuenta 1');
-        insert cuentaTest;
+        Contact contactoTest = [SELECT Id FROM Contact WHERE FirstName = 'Soyde' LIMIT 1];
 
-        Contact contactoTest = new Contact(FirstName = 'Soyde', LastName = 'Prueba', AccountId = cuentaTest.Id);
-        insert contactoTest;
 
         // Buscar un usuario con el perfil "System Administrator"
         User adminUser = [SELECT Id FROM User WHERE Profile.Name = 'System Administrator' LIMIT 1];
@@ -138,11 +138,9 @@ private class ProyectoTriggerHandlerTest {
     @IsTest
     static void obtenerCuentasAfectadasTestListaPoblada(){
         //GIVEN
-        Account cuentaTest = new Account(Name = 'Cuenta 1');
-        insert cuentaTest;
+        Account cuentaTest = [SELECT Id FROM Account WHERE Name = 'Cuenta 1' LIMIT 1];
 
-        Contact contactoTest = new Contact(FirstName = 'Soyde', LastName = 'Prueba', AccountId = cuentaTest.Id);
-        insert contactoTest;
+        Contact contactoTest = [SELECT Id FROM Contact WHERE FirstName = 'Soyde' LIMIT 1];
 
         List<Proyecto__c> listaProyectos = new List<Proyecto__c>();
         Proyecto__c proyecto = new Proyecto__c(
@@ -171,11 +169,9 @@ private class ProyectoTriggerHandlerTest {
     @IsTest
     static void controlarActivosTestPositivo(){
         //GIVEN
-        Account cuentaTest = new Account(Name = 'Cuenta 1', Limite_Proyectos_Activos__c = 1);
-        insert cuentaTest;
+        Account cuentaTest = [SELECT Id FROM Account WHERE Name = 'Cuenta 1' LIMIT 1];
 
-        Contact contactoTest = new Contact(FirstName = 'Soyde', LastName = 'Prueba', AccountId = cuentaTest.Id);
-        insert contactoTest;
+        Contact contactoTest = [SELECT Id FROM Contact WHERE FirstName = 'Soyde' LIMIT 1];
 
         List<Proyecto__c> listaProyectos = new List<Proyecto__c>();
         Proyecto__c proyectoAInsertar = new Proyecto__c(
@@ -205,11 +201,9 @@ private class ProyectoTriggerHandlerTest {
     @IsTest
     static void controlarActivosTestNegativo(){
         //GIVEN
-        Account cuentaTest = new Account(Name = 'Cuenta 1', Limite_Proyectos_Activos__c = 1);
-        insert cuentaTest;
+        Account cuentaTest = [SELECT Id FROM Account WHERE Name = 'Cuenta 1' LIMIT 1];
 
-        Contact contactoTest = new Contact(FirstName = 'Soyde', LastName = 'Prueba', AccountId = cuentaTest.Id);
-        insert contactoTest;
+        Contact contactoTest = [SELECT Id FROM Contact WHERE FirstName = 'Soyde' LIMIT 1];
 
         Proyecto__c proyectoAInsertar = new Proyecto__c(
             Name = 'Proyecto de prueba', 
@@ -255,11 +249,9 @@ private class ProyectoTriggerHandlerTest {
     @IsTest
     static void controlarActivosTestMixto(){
         //GIVEN
-        Account cuentaTest = new Account(Name = 'Cuenta 1', Limite_Proyectos_Activos__c = 2);
-        insert cuentaTest;
+        Account cuentaTest = [SELECT Id FROM Account WHERE Name = 'Cuenta 1' LIMIT 1];
 
-        Contact contactoTest = new Contact(FirstName = 'Soyde', LastName = 'Prueba', AccountId = cuentaTest.Id);
-        insert contactoTest;
+        Contact contactoTest = [SELECT Id FROM Contact WHERE FirstName = 'Soyde' LIMIT 1];
         
         Proyecto__c proyectoInsertado = new Proyecto__c(
             Name = 'Proyecto de prueba 1', 
@@ -318,11 +310,9 @@ private class ProyectoTriggerHandlerTest {
     @IsTest
     static void actualizarPromedioTestCeroInsert(){ //si inserto alguno que no este "En Progreso" que no se modifique el promedio
         //GIVEN
-        Account cuentaTest = new Account(Name = 'Cuenta 1');
-        insert cuentaTest;
+        Account cuentaTest = [SELECT Id FROM Account WHERE Name = 'Cuenta 1' LIMIT 1];
 
-        Contact contactoTest = new Contact(FirstName = 'Soyde', LastName = 'Prueba', AccountId = cuentaTest.Id);
-        insert contactoTest;
+        Contact contactoTest = [SELECT Id FROM Contact WHERE FirstName = 'Soyde' LIMIT 1];
 
         Proyecto__c proyectoAInsertar = new Proyecto__c(
             Name = 'Proyecto de prueba', 
@@ -348,11 +338,9 @@ private class ProyectoTriggerHandlerTest {
     @IsTest
     static void actualizarPromedioTestCeroUpdate(){ //testea si luego de cambiar el estado del unico proyecto activo de una cuenta a "Finalizado" se acutaliza el presupuesto a 0.
         //GIVEN
-        Account cuentaTest = new Account(Name = 'Cuenta 1');
-        insert cuentaTest;
+        Account cuentaTest = [SELECT Id FROM Account WHERE Name = 'Cuenta 1' LIMIT 1];
 
-        Contact contactoTest = new Contact(FirstName = 'Soyde', LastName = 'Prueba', AccountId = cuentaTest.Id);
-        insert contactoTest;
+        Contact contactoTest = [SELECT Id FROM Contact WHERE FirstName = 'Soyde' LIMIT 1];
 
         Proyecto__c proyectoAInsertar = new Proyecto__c(
             Name = 'Proyecto de prueba', 
@@ -380,13 +368,11 @@ private class ProyectoTriggerHandlerTest {
 
     @IsTest
     static void actualizarPromedioTestCeroDelete(){ //si borro un proyecto viejo, que no modifique el promedio
-        Account cuentaTest = new Account(Name = 'Cuenta 1');
-        insert cuentaTest;
+        //GIVEN
+        Account cuentaTest = [SELECT Id FROM Account WHERE Name = 'Cuenta 1' LIMIT 1];
 
-        Contact contactoTest = new Contact(FirstName = 'Soyde', LastName = 'Prueba', AccountId = cuentaTest.Id);
-        insert contactoTest;
+        Contact contactoTest = [SELECT Id FROM Contact WHERE FirstName = 'Soyde' LIMIT 1];
 
-        
         // Buscar un usuario con el perfil "System Administrator"
         User adminUser = [SELECT Id FROM User WHERE Profile.Name = 'System Administrator' LIMIT 1];
 
@@ -418,11 +404,9 @@ private class ProyectoTriggerHandlerTest {
     @IsTest
     static void actualizarPromedioTestInsertEnProgreso(){ //si inserto un proyecto "En Progreso" y hay otro "En Progreso", hay que actualizar el promedio
         //GIVEN
-        Account cuentaTest = new Account(Name = 'Cuenta 1');
-        insert cuentaTest;
+        Account cuentaTest = [SELECT Id FROM Account WHERE Name = 'Cuenta 1' LIMIT 1];
 
-        Contact contactoTest = new Contact(FirstName = 'Soyde', LastName = 'Prueba', AccountId = cuentaTest.Id);
-        insert contactoTest;
+        Contact contactoTest = [SELECT Id FROM Contact WHERE FirstName = 'Soyde' LIMIT 1];
 
         Proyecto__c proyectoInsertado = new Proyecto__c(
             Name = 'Proyecto de prueba', 
@@ -460,11 +444,9 @@ private class ProyectoTriggerHandlerTest {
     @IsTest
     static void actualizarPromedioTestInsertPlaneado(){ //si inserto un proyecto "Planeado", que no modifique el promedio
         //GIVEN
-        Account cuentaTest = new Account(Name = 'Cuenta 1');
-        insert cuentaTest;
+        Account cuentaTest = [SELECT Id FROM Account WHERE Name = 'Cuenta 1' LIMIT 1];
 
-        Contact contactoTest = new Contact(FirstName = 'Soyde', LastName = 'Prueba', AccountId = cuentaTest.Id);
-        insert contactoTest;
+        Contact contactoTest = [SELECT Id FROM Contact WHERE FirstName = 'Soyde' LIMIT 1];
 
         Proyecto__c proyectoInsertado = new Proyecto__c(
             Name = 'Proyecto de prueba', 
@@ -502,11 +484,9 @@ private class ProyectoTriggerHandlerTest {
     @IsTest
     static void actualizarPromedioTestUpdateEnProgreso(){ //si cambio el estado de un proyecto "En Progreso" a "Finalizado" y hay otro "En Progreso", hay que actualizar el promedio
         //GIVEN
-        Account cuentaTest = new Account(Name = 'Cuenta 1');
-        insert cuentaTest;
+        Account cuentaTest = [SELECT Id FROM Account WHERE Name = 'Cuenta 1' LIMIT 1];
 
-        Contact contactoTest = new Contact(FirstName = 'Soyde', LastName = 'Prueba', AccountId = cuentaTest.Id);
-        insert contactoTest;
+        Contact contactoTest = [SELECT Id FROM Contact WHERE FirstName = 'Soyde' LIMIT 1];
 
         Proyecto__c proyectoInsertado = new Proyecto__c(
             Name = 'Proyecto de prueba', 
