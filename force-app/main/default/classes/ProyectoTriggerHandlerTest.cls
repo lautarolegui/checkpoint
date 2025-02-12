@@ -2,11 +2,19 @@
 private class ProyectoTriggerHandlerTest {
     @TestSetup //se agrega el test setup para los test, para optimizar el codigo
     static void cargaCuentas() {
-        Account cuentaTest = new Account(Name = 'Cuenta 1');
-        insert cuentaTest;
+        List <Account> listaCuentas = new List<Account>();
+        for(Integer i = 0; i < 150; i++) {
+            Account cuenta = new Account(Name = 'Cuenta ' + i);
+            listaCuentas.add(cuenta);
+        }
+        insert listaCuentas;
 
-        Contact contactoTest = new Contact(FirstName = 'Soyde', LastName = 'Prueba', AccountId = cuentaTest.Id);
-        insert contactoTest;
+        List <Contact> listaContactos = new List<Contact>();
+        for(Integer j = 0; j < 150; j++){
+            Contact contacto = new Contact(FirstName = 'Soyde', LastName = 'Prueba ' + j, AccountId = listaCuentas[j].Id);
+            listaContactos.add(contacto);
+        }
+        insert listaContactos;
     }
 
     @IsTest
